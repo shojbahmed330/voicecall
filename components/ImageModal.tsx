@@ -26,6 +26,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ post, currentUser, isLoading, o
   // If the post data is null, OR if the author field is missing (e.g. user was deleted),
   // we render nothing. This completely avoids any attempt to access properties of a null object.
   if (!post || !post.author) {
+    onClose(); // Close the modal if the data is invalid
     return null;
   }
   

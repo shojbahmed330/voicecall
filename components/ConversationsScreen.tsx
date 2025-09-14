@@ -102,7 +102,7 @@ const ConversationsScreen: React.FC<ConversationsScreenProps> = ({ currentUser, 
   useEffect(() => {
     setIsLoading(true);
     // FIX: Awaited the promise that returns the unsubscribe function to correctly handle cleanup.
-    const unsubscribe = firebaseService.listenToConversations(currentUser.id, (convos) => {
+    const unsubscribePromise = firebaseService.listenToConversations(currentUser.id, (convos) => {
         setConversations(convos);
         if (isLoading) {
              onSetTtsMessage(getTtsPrompt('conversations_loaded', language));
@@ -111,7 +111,7 @@ const ConversationsScreen: React.FC<ConversationsScreenProps> = ({ currentUser, 
     });
 
     return () => {
-        unsubscribe();
+        unsubscribePromise.then(unsubscribe => unsubscribe());
     };
   }, [currentUser.id, onSetTtsMessage, language, isLoading]);
 

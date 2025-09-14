@@ -24,6 +24,7 @@ const TimeAgo: React.FC<{ date: string }> = ({ date }) => {
 };
 
 const NotificationItem: React.FC<{ notification: Notification; onClick: () => void }> = ({ notification, onClick }) => {
+  // FIX: Added a null-check to prevent crashes from corrupted Firestore data.
   if (!notification || !notification.user) {
     // This is a safety net for corrupted data from Firestore, preventing a crash.
     return null; 

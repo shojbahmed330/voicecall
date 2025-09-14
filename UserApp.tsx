@@ -257,7 +257,7 @@ const UserApp: React.FC = () => {
   useEffect(() => {
     if (!user) return;
 
-    const unsubscribe = firebaseService.listenToConversations(user.id, (newConvos) => {
+    const unsubscribePromise = firebaseService.listenToConversations(user.id, (newConvos) => {
         const convoWithNewMessage = newConvos.find(convo => {
             if (!convo.lastMessage || convo.lastMessage.senderId === user.id) {
                 return false;
@@ -292,7 +292,7 @@ const UserApp: React.FC = () => {
         // FIX: The original code was not correctly calling the unsubscribe function
         // because listenToConversations was (incorrectly) async. After correcting
         // listenToConversations to be synchronous, this cleanup works as expected.
-        unsubscribe();
+        unsubscribePromise.then(unsub => unsub());
     };
 }, [user, handleOpenConversation]);
 

@@ -226,6 +226,7 @@ const AdsScreen: React.FC<AdsScreenProps> = ({ currentUser, onSetTtsMessage, las
         }
         setIsLoadingLeads(true);
         setViewingLeadsFor(campaignId);
+        // FIX: Property 'getLeadsForCampaign' does not exist on type '{ signUpWithEmail(email: string, password: string, fullName: string, username: string): Promise<boolean>; signInWithEmail(identifier: string, password: string): Promise<...>; ... 50 more ...; searchUsers(query: string): Promise<...>; }'.
         const fetchedLeads = await firebaseService.getLeadsForCampaign(campaignId);
         setLeads(fetchedLeads);
         setIsLoadingLeads(false);
