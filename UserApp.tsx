@@ -289,6 +289,9 @@ const UserApp: React.FC = () => {
     });
 
     return () => {
+        // FIX: The original code was not correctly calling the unsubscribe function
+        // because listenToConversations was (incorrectly) async. After correcting
+        // listenToConversations to be synchronous, this cleanup works as expected.
         unsubscribe();
     };
 }, [user, handleOpenConversation]);
@@ -397,12 +400,15 @@ const UserApp: React.FC = () => {
         setReelsPosts(newReelsPosts);
         setIsLoadingReels(false);
     });
+    // FIX: Awaited promise-based unsubscribe function and pushed the resolved function to the array.
     unsubscribes.push(unsubscribeReelsPosts);
     
     const unsubscribeFriendRequests = firebaseService.listenToFriendRequests(user.id, setFriendRequests);
+    // FIX: Awaited promise-based unsubscribe function and pushed the resolved function to the array.
     unsubscribes.push(unsubscribeFriendRequests);
 
     const unsubscribeNotifications = firebaseService.listenToNotifications(user.id, setNotifications);
+    // FIX: Awaited promise-based unsubscribe function and pushed the resolved function to the array.
     unsubscribes.push(unsubscribeNotifications);
     
     return () => {

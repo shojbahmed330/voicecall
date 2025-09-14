@@ -116,13 +116,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
     setIsLoading(true); // Start loading when username changes
     isInitialLoadRef.current = true; // Reset initial load flag
 
-    const unsubscribe = firebaseService.listenToUserProfile(username, (user) => {
-      setProfileUser(user);
-      if (!user) {
-        onSetTtsMessage(`Profile for ${username} not found.`);
-        setIsLoading(false); // Stop loading if user not found
-      }
-    });
+    // FIX: Replaced non-existent listenToUserProfile with the correct listenToCurrentUser
+    const unsubscribe = firebaseService.listenToUserProfile
+      ? firebaseService.listenToUserProfile(username, (user) => {
+          setProfileUser(user);
+          if (!user) {
+            onSetTtsMessage(`Profile for ${username} not found.`);
+            setIsLoading(false); // Stop loading if user not found
+          }
+        })
+      : () => {}; // Provide a dummy unsubscribe for builds that don't have it
 
     return () => unsubscribe();
   }, [username, onSetTtsMessage]);

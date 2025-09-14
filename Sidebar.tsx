@@ -136,7 +136,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser, onNavigate, friendReques
             <NavItem
                 iconName="chat-bubble-group"
                 label="Rooms"
-                isActive={activeView === AppView.ROOMS_LIST || activeView === AppView.LIVE_ROOM}
+                // FIX: Expanded the check to include all room-related views for accurate active state highlighting.
+                isActive={[AppView.ROOMS_HUB, AppView.ROOMS_LIST, AppView.LIVE_ROOM, AppView.VIDEO_ROOMS_LIST, AppView.LIVE_VIDEO_ROOM].includes(activeView)}
                 onClick={() => onNavigate('rooms')}
             />
              <NavItem

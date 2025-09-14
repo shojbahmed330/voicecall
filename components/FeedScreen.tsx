@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Post, User, ScrollState, Campaign, AppView, Story, Comment } from '../types';
 import { PostCard } from './PostCard';
@@ -56,7 +54,6 @@ const FeedScreen: React.FC<FeedScreenProps> = ({
   
   const isInitialLoad = useRef(true);
   const isProgrammaticScroll = useRef(false);
-  // FIX: Use a ref to hold the current post index to avoid stale state in the IntersectionObserver callback.
   const currentPostIndexRef = useRef(currentPostIndex);
   currentPostIndexRef.current = currentPostIndex;
 

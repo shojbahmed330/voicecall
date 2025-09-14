@@ -504,7 +504,7 @@ const AdsScreen: React.FC<AdsScreenProps> = ({ currentUser, onSetTtsMessage, las
                 />
             )}
         </div>
-    );
+    )
 };
 
 export default AdsScreen;

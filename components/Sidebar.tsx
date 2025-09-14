@@ -127,14 +127,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser, onNavigate, friendReques
             <NavItem
                 iconName="message"
                 label="Messages"
-                // FIX: Property 'MESSAGES' does not exist on type 'typeof AppView'. Corrected to CONVERSATIONS.
                 isActive={activeView === AppView.CONVERSATIONS}
                 onClick={() => onNavigate('messages')}
             />
             <NavItem
                 iconName="chat-bubble-group"
                 label="Rooms"
-                // FIX: Add all room-related views to the active check for correct highlighting.
                 isActive={[AppView.ROOMS_HUB, AppView.ROOMS_LIST, AppView.LIVE_ROOM, AppView.VIDEO_ROOMS_LIST, AppView.LIVE_VIDEO_ROOM].includes(activeView)}
                 onClick={() => onNavigate('rooms')}
             />
