@@ -3,7 +3,7 @@ import type { Post, User, Comment, ScrollState } from '../types';
 import { PostCard } from './PostCard';
 import CommentCard from './CommentCard';
 import { geminiService } from '../services/geminiService';
-// @FIXML-FIX-46: Import firebaseService
+// FIX: Import firebaseService at the top level.
 import { firebaseService } from '../services/firebaseService';
 import Icon from './Icon';
 import { getTtsPrompt } from '../constants';
@@ -26,7 +26,7 @@ interface PostDetailScreenProps {
   scrollState: ScrollState;
   onCommandProcessed: () => void;
   onGoBack: () => void;
-  // @FIXML-FIX-185: Add onStartComment to props interface
+  // FIX: Add onStartComment to props interface
   onStartComment: (postId: string, commentToReplyTo?: Comment) => void;
 }
 
@@ -203,7 +203,7 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ postId, newlyAddedC
           onAuthorClick={onOpenProfile}
           onSharePost={onSharePost}
           onOpenPhotoViewer={onOpenPhotoViewer}
-// @FIXML-FIX-185: Pass onStartComment prop to PostCard
+          // FIX: Pass onStartComment prop to PostCard
           onStartComment={onStartComment}
         />
 
@@ -221,7 +221,7 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ postId, newlyAddedC
                                 onAuthorClick={onOpenProfile}
                                 onReply={setReplyingTo}
                                 onReact={(commentId, emoji) => onReactToComment(post.id, commentId, emoji)}
-// @FIXML-FIX-212: Pass onEdit and onDelete to CommentCard
+                                // FIX: Pass onEdit and onDelete to CommentCard
                                 onEdit={(commentId, newText) => onEditComment(post.id, commentId, newText)}
                                 onDelete={(commentId) => onDeleteComment(post.id, commentId)}
                             />
@@ -234,7 +234,7 @@ const PostDetailScreen: React.FC<PostDetailScreenProps> = ({ postId, newlyAddedC
                                             comment={reply}
                                             currentUser={currentUser}
                                             isPlaying={playingCommentId === reply.id}
-// @FIXML-FIX-224: Pass isReply to CommentCard
+                                            // FIX: Pass isReply to CommentCard
                                             isReply={true}
                                             onPlayPause={() => handlePlayComment(reply)}
                                             onAuthorClick={onOpenProfile}

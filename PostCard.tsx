@@ -1,6 +1,7 @@
 
+
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-// @FIX: Update import paths to be relative to the root directory
+// FIX: Update import paths to be relative to the root directory
 import type { Post, User, Comment, GroupRole } from './types';
 import Icon from './components/Icon';
 import Waveform from './components/Waveform';
@@ -18,7 +19,7 @@ interface PostCardProps {
   onReact: (postId: string, emoji: string) => void;
   onViewPost: (postId: string) => void;
   onAuthorClick: (username: string) => void;
-  // @FIX: Add missing props to the interface
+  // FIX: Add missing props to the interface
   onStartComment: (postId: string, commentToReplyTo?: Comment) => void;
   onSharePost?: (post: Post) => void;
   onAdClick?: (post: Post) => void;
@@ -43,7 +44,7 @@ const REACTION_COLORS: { [key: string]: string } = {
 };
 
 export const PostCard: React.FC<PostCardProps> = ({ post, currentUser, isActive, isPlaying, onPlayPause, onReact, onViewPost, onAuthorClick, onStartComment, onSharePost, onAdClick, onDeletePost, onOpenPhotoViewer, groupRole, isGroupAdmin, isPinned, onPinPost, onUnpinPost, onVote }) => {
-  // FINAL FIX: Add a guard clause for the post and its author.
+  // FIX: Add a guard clause for the post and its author.
   // This is the root cause of the crash. If a post from a deleted user
   // is fetched, `post.author` can be null, causing the entire app to crash
   // wherever this central component is used. This check makes the app resilient.

@@ -42,7 +42,7 @@ const REACTION_COLORS: { [key: string]: string } = {
 };
 
 export const PostCard: React.FC<PostCardProps> = ({ post, currentUser, isActive, isPlaying, onPlayPause, onReact, onViewPost, onAuthorClick, onStartComment, onSharePost, onAdClick, onDeletePost, onOpenPhotoViewer, groupRole, isGroupAdmin, isPinned, onPinPost, onUnpinPost, onVote }) => {
-  // FINAL FIX: Add a guard clause for the post and its author.
+  // FIX: Add a guard clause for the post and its author.
   // This is the root cause of the crash. If a post from a deleted user
   // is fetched, `post.author` can be null, causing the entire app to crash
   // wherever this central component is used. This check makes the app resilient.

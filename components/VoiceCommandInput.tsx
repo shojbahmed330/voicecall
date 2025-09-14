@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Icon from './Icon';
 import { VoiceState } from '../types';
@@ -10,12 +9,13 @@ interface VoiceCommandInputProps {
   value: string;
   onValueChange: (newValue: string) => void;
   placeholder?: string;
+  isDisabled?: boolean;
 }
 
-const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, voiceState, onMicClick, value, onValueChange, placeholder }) => {
+const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, voiceState, onMicClick, value, onValueChange, placeholder, isDisabled = false }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (value.trim()) {
+    if (value.trim() && !isDisabled) {
       onSendCommand(value.trim());
     }
   };
@@ -24,6 +24,7 @@ const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, vo
   const hasText = value.trim().length > 0;
 
   const getIndicatorColor = () => {
+    if (isDisabled) return 'text-slate-500';
     switch (voiceState) {
       case VoiceState.LISTENING:
         return 'text-rose-500 animate-pulse';
@@ -34,7 +35,7 @@ const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, vo
     }
   };
 
-  const placeholderText = isListening ? "Listening..." : placeholder || "Say or type a command...";
+  const placeholderText = isDisabled ? "Voice commands unavailable" : (isListening ? "Listening..." : placeholder || "Say or type a command...");
 
   return (
     <form onSubmit={handleSubmit} className="w-full bg-slate-800 p-3 border-t border-slate-700">
@@ -47,8 +48,8 @@ const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, vo
           value={value}
           onChange={(e) => onValueChange(e.target.value)}
           placeholder={placeholderText}
-          className="bg-slate-900 border border-slate-700 text-slate-100 text-base rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pl-11 pr-16 py-3 transition"
-          disabled={isListening}
+          className="bg-slate-900 border border-slate-700 text-slate-100 text-base rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full pl-11 pr-16 py-3 transition disabled:bg-slate-800 disabled:cursor-not-allowed"
+          disabled={isListening || isDisabled}
         />
         
         {/* --- Mobile Button: single, circular, changes icon --- */}
@@ -62,7 +63,7 @@ const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, vo
                     }
                 }}
                 className="w-12 h-12 rounded-full bg-lime-600 hover:bg-lime-500 text-black flex items-center justify-center transition-all duration-200 disabled:bg-slate-600"
-                disabled={isListening}
+                disabled={isListening || isDisabled}
                 aria-label={hasText ? "Send command" : "Use voice command"}
             >
                 <div className="relative w-6 h-6">
@@ -82,10 +83,10 @@ const VoiceCommandInput: React.FC<VoiceCommandInputProps> = ({ onSendCommand, vo
 
         {/* --- Desktop Buttons: original layout --- */}
         <div className="absolute inset-y-0 right-0 hidden md:flex items-center">
-            <button type="button" onClick={onMicClick} title="Use voice command" className="p-2 rounded-full text-slate-400 hover:text-lime-500 transition-colors mr-14">
+            <button type="button" onClick={onMicClick} title="Use voice command" className="p-2 rounded-full text-slate-400 hover:text-lime-500 transition-colors mr-14" disabled={isDisabled}>
                 <Icon name="mic" className={`w-7 h-7 ${isListening ? 'text-rose-500' : 'text-slate-400'}`} />
             </button>
-            <button type="submit" className="h-full px-4 text-slate-400 hover:text-lime-500 transition-colors font-semibold">
+            <button type="submit" className="h-full px-4 text-slate-400 hover:text-lime-500 transition-colors font-semibold" disabled={isDisabled}>
                 Send
             </button>
         </div>

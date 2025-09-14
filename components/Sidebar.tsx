@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User, AppView, VoiceState } from '../types';
 import Icon from './Icon';
@@ -135,7 +134,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentUser, onNavigate, friendReques
             <NavItem
                 iconName="chat-bubble-group"
                 label="Rooms"
-                isActive={activeView === AppView.ROOMS_LIST || activeView === AppView.LIVE_ROOM || activeView === AppView.ROOMS_HUB}
+                // FIX: Add all room-related views to the active check for correct highlighting.
+                isActive={[AppView.ROOMS_HUB, AppView.ROOMS_LIST, AppView.LIVE_ROOM, AppView.VIDEO_ROOMS_LIST, AppView.LIVE_VIDEO_ROOM].includes(activeView)}
                 onClick={() => onNavigate('rooms')}
             />
              <NavItem

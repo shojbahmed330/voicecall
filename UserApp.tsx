@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { AppView, User, VoiceState, Post, Comment, ScrollState, Notification, Campaign, Group, Story, Conversation } from './types';
 import AuthScreen from './components/AuthScreen';
@@ -175,6 +174,7 @@ const UserApp: React.FC = () => {
   const [activeChats, setActiveChats] = useState<User[]>([]);
   const [minimizedChats, setMinimizedChats] = useState<Set<string>>(new Set());
   const [chatUnreadCounts, setChatUnreadCounts] = useState<Record<string, number>>({});
+  const [isVoiceCommandSuppressed, setIsVoiceCommandSuppressed] = useState(false);
   
   const userRef = useRef(user);
   userRef.current = user;
@@ -230,6 +230,29 @@ const UserApp: React.FC = () => {
         return newSet;
     });
   }, [user]);
+
+  const handleInitiateCall = useCallback(async (peer: User, type: 'audio' | 'video') => {
+    if (!user) return;
+    setTtsMessage(`Starting ${type} call with ${peer.name}...`);
+    try {
+        let room;
+        if (type === 'audio') {
+            room = await geminiService.createLiveAudioRoom(user, `Private Call with ${peer.name}`);
+        } else {
+            room = await geminiService.createLiveVideoRoom(user, `Private Call with ${peer.name}`);
+        }
+        
+        if (room) {
+            // In a real app, you'd send an invitation to the peer user here.
+            // For this simulation, we navigate directly.
+            const targetView = type === 'audio' ? AppView.LIVE_ROOM : AppView.LIVE_VIDEO_ROOM;
+            navigate(targetView, { roomId: room.id });
+        }
+    } catch (error) {
+        console.error(`Failed to create ${type} room:`, error);
+        setTtsMessage(`Failed to start ${type} call. Please try again.`);
+    }
+  }, [user, navigate, setTtsMessage]);
 
   useEffect(() => {
     if (!user) return;
@@ -475,6 +498,10 @@ const UserApp: React.FC = () => {
   }, []);
 
   const handleMicClick = useCallback(() => {
+    if (isVoiceCommandSuppressed) {
+        setTtsMessage("Voice commands are disabled while recording a message.");
+        return;
+    }
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       setTtsMessage(getTtsPrompt('error_no_speech_rec', language));
@@ -531,7 +558,7 @@ const UserApp: React.FC = () => {
     };
 
     recognition.start();
-  }, [voiceState, handleCommand, language]);
+  }, [voiceState, handleCommand, language, isVoiceCommandSuppressed]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -1009,6 +1036,7 @@ const UserApp: React.FC = () => {
                 value={commandInputValue}
                 onValueChange={setCommandInputValue}
                 placeholder={ttsMessage}
+                isDisabled={isVoiceCommandSuppressed}
             />
         </footer>
       </div>
@@ -1119,6 +1147,8 @@ const UserApp: React.FC = () => {
             chatUnreadCounts={chatUnreadCounts}
             onCloseChat={handleCloseChat}
             onMinimizeToggle={handleMinimizeToggle}
+            onInitiateCall={handleInitiateCall}
+            onSetVoiceCommandSuppression={setIsVoiceCommandSuppressed}
           />
       )}
       
@@ -1148,6 +1178,7 @@ const UserApp: React.FC = () => {
         commandInputValue={commandInputValue}
         setCommandInputValue={setCommandInputValue}
         ttsMessage={ttsMessage}
+        isSuppressed={isVoiceCommandSuppressed}
        />
     </div>
   );

@@ -22,7 +22,7 @@ interface ImageModalProps {
 const REACTIONS = ['👍', '❤️', '😂', '😮', '😢', '😡'];
 
 const ImageModal: React.FC<ImageModalProps> = ({ post, currentUser, isLoading, onClose, onReactToPost, onReactToComment, onPostComment, onEditComment, onDeleteComment, onOpenProfile, onSharePost }) => {
-  // FINAL FIX: This is the most robust way to prevent the crash.
+  // FIX: This is the most robust way to prevent the crash.
   // If the post data is null, OR if the author field is missing (e.g. user was deleted),
   // we render nothing. This completely avoids any attempt to access properties of a null object.
   if (!post || !post.author) {

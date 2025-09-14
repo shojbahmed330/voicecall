@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { AuthMode } from './types';
 import { firebaseService } from './services/firebaseService';
@@ -7,14 +8,15 @@ import { getTtsPrompt } from './constants';
 import { useSettings } from './contexts/SettingsContext';
 
 interface AuthScreenProps {
-  ttsMessage: string;
   onSetTtsMessage: (message: string) => void;
   lastCommand: string | null;
   onCommandProcessed: () => void;
   initialAuthError?: string;
 }
 
-const AuthScreen: React.FC<AuthScreenProps> = ({ ttsMessage, onSetTtsMessage, lastCommand, onCommandProcessed, initialAuthError }) => {
+const AuthScreen: React.FC<AuthScreenProps> = ({ 
+  onSetTtsMessage, lastCommand, onCommandProcessed, initialAuthError
+}) => {
   const [mode, setMode] = useState<AuthMode>(AuthMode.LOGIN);
   
   // State for login
@@ -176,7 +178,7 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ ttsMessage, onSetTtsMessage, la
       
       <div className="bg-white rounded-lg p-6 w-full max-w-sm shadow-xl">
         <p className={`font-medium text-lg min-h-[3em] flex items-center justify-center ${authError ? 'text-red-500' : 'text-blue-600'}`}>
-          {isLoading ? 'Processing...' : (authError || ttsMessage)}
+          {isLoading ? 'Processing...' : (authError || ' ')}
         </p>
         { (mode > AuthMode.LOGIN) && renderSignupProgress() }
         { (mode === AuthMode.LOGIN && identifier) && <p className="text-gray-500 text-sm mt-4">Logging in as: <span className="text-gray-800">{identifier}</span></p> }

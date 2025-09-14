@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { User } from '../types';
 import ChatWidget from './ChatWidget';
@@ -12,6 +11,8 @@ interface ChatManagerProps {
   chatUnreadCounts: Record<string, number>;
   onCloseChat: (peerId: string) => void;
   onMinimizeToggle: (peerId: string) => void;
+  onInitiateCall: (peer: User, type: 'audio' | 'video') => void;
+  onSetVoiceCommandSuppression: (isSuppressed: boolean) => void;
 }
 
 const ChatManager: React.FC<ChatManagerProps> = ({
@@ -22,6 +23,8 @@ const ChatManager: React.FC<ChatManagerProps> = ({
   chatUnreadCounts,
   onCloseChat,
   onMinimizeToggle,
+  onInitiateCall,
+  onSetVoiceCommandSuppression,
 }) => {
   const friendsMap = useMemo(() => {
     const map = new Map<string, User>();
@@ -53,6 +56,8 @@ const ChatManager: React.FC<ChatManagerProps> = ({
             onHeaderClick={onMinimizeToggle}
             isMinimized={true}
             unreadCount={chatUnreadCounts[firebaseService.getChatId(currentUser.id, peer.id)] || 0}
+            onInitiateCall={onInitiateCall}
+            onSetVoiceCommandSuppression={onSetVoiceCommandSuppression}
           />
         ))}
         {openChats.map(peer => (
@@ -65,6 +70,8 @@ const ChatManager: React.FC<ChatManagerProps> = ({
             onHeaderClick={onMinimizeToggle}
             isMinimized={false}
             unreadCount={0}
+            onInitiateCall={onInitiateCall}
+            onSetVoiceCommandSuppression={onSetVoiceCommandSuppression}
           />
         ))}
       </div>

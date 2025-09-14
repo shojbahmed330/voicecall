@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { AppView, VoiceState } from '../types';
 import Icon from './Icon';
@@ -14,6 +13,7 @@ interface MobileBottomNavProps {
     commandInputValue: string;
     setCommandInputValue: (value: string) => void;
     ttsMessage: string;
+    isSuppressed: boolean;
 }
 
 const NavItem: React.FC<{
@@ -42,7 +42,7 @@ const NavItem: React.FC<{
 };
 
 
-const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onNavigate, friendRequestCount, activeView, voiceState, onMicClick, onSendCommand, commandInputValue, setCommandInputValue, ttsMessage }) => {
+const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onNavigate, friendRequestCount, activeView, voiceState, onMicClick, onSendCommand, commandInputValue, setCommandInputValue, ttsMessage, isSuppressed }) => {
     return (
         <div className="fixed bottom-0 left-0 right-0 h-auto bg-gradient-to-t from-black to-slate-900 border-t border-lime-500/20 z-40 md:hidden flex flex-col">
             {/* The new, persistent command input bar for mobile */}
@@ -53,6 +53,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onNavigate, friendReq
                 value={commandInputValue}
                 onValueChange={setCommandInputValue}
                 placeholder={ttsMessage}
+                isDisabled={isSuppressed}
             />
             {/* The 5-button navigation bar */}
             <div className="flex justify-around items-center h-16">
@@ -77,7 +78,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onNavigate, friendReq
                  <NavItem
                     iconName="message"
                     label="Messages"
-                    // FIX: Property 'MESSAGES' does not exist on type 'typeof AppView'.
+                    // FIX: Property 'MESSAGES' does not exist on type 'typeof AppView'. Corrected to CONVERSATIONS.
                     isActive={activeView === AppView.CONVERSATIONS}
                     onClick={() => onNavigate('messages')}
                 />
