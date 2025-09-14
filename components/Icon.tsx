@@ -1,8 +1,9 @@
 
 
+
 import React from 'react';
 
-type IconName = 'mic' | 'like' | 'comment' | 'share' | 'play' | 'pause' | 'logo' | 'back' | 'settings' | 'add-friend' | 'message' | 'edit' | 'bell' | 'briefcase' | 'academic-cap' | 'home' | 'map-pin' | 'user-slash' | 'globe' | 'users' | 'lock-closed' | 'ellipsis-vertical' | 'trash' | 'speaker-wave' | 'swatch' | 'coin' | 'chat-bubble-group' | 'video-camera' | 'video-camera-slash' | 'microphone-slash' | 'close' | 'add-circle' | 'paper-airplane' | 'home-solid' | 'users-group-solid' | 'photo' | 'compass' | 'film' | 'link' | 'facebook' | 'twitter' | 'whatsapp';
+type IconName = 'mic' | 'like' | 'comment' | 'share' | 'play' | 'pause' | 'logo' | 'back' | 'settings' | 'add-friend' | 'message' | 'edit' | 'bell' | 'briefcase' | 'academic-cap' | 'home' | 'map-pin' | 'user-slash' | 'globe' | 'users' | 'lock-closed' | 'ellipsis-vertical' | 'trash' | 'speaker-wave' | 'swatch' | 'coin' | 'chat-bubble-group' | 'video-camera' | 'video-camera-slash' | 'microphone-slash' | 'close' | 'add-circle' | 'paper-airplane' | 'home-solid' | 'users-group-solid' | 'photo' | 'compass' | 'film' | 'link' | 'facebook' | 'twitter' | 'whatsapp' | 'phone';
 
 interface IconProps {
   name: IconName;
@@ -236,6 +237,11 @@ const ICONS: Record<IconName, React.ReactNode> = {
   whatsapp: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.42 1.29 4.89L2 22l5.25-1.38c1.41.78 3.01 1.22 4.69 1.22h.1c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.48 15.9c-.21.21-1.22.6-1.41.66s-.35.1-.73-.05c-.38-.15-1.58-1-2.9-2.13s-2.1-1.89-2.2-2.18-.08-.31.08-.46.3-.35.44-.48.21-.21.31-.36.05-.26-.05-.46c-.1-.21-.43-.99-.58-1.33s-.3-.29-.41-.3c-.1-.02-.21-.02-.31-.02s-.26.04-.41.21-.58.55-.71.97-.21 1.07.05 1.92c.26.85 1.13 2.21 2.75 3.59 1.95 1.65 3.39 2.12 4.13 2.31.22.06.66.02 1.03-.21.43-.27.7-.82.8-1.07s.1-.21.05-.41c-.04-.21-.1-.26-.2-.46z"/>
+    </svg>
+  ),
+  phone: (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
     </svg>
   ),
 };
